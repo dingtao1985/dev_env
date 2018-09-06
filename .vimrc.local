@@ -1,0 +1,49 @@
+"set nocursorline " don't highlight current line
+set cursorline
+"hi cursorline cterm=NONE ctermbg=grey ctermfg=white guibg=darkred guifg=blue
+hi cursorline cterm=NONE ctermbg=blue ctermfg=white guibg=blue guifg=white
+"hi cursorcolumn cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
+"set foldmethod=indent
+
+" keyboard shortcuts
+inoremap jj <ESC>
+
+"highlight Search term=NONE ctermbg=grey guibg=white
+highlight Search term=standout ctermfg=0 ctermbg=11 guifg=Black guibg=Yellow
+highlight Visual term=standout ctermfg=0 ctermbg=11 guifg=Black guibg=Yellow
+set hlsearch
+set incsearch
+set smartcase
+"nmap <leader>hl :let @/ = ""<CR>
+
+" gui settings
+if (&t_Co == 256 || has('gui_running'))
+  if ($TERM_PROGRAM == 'iTerm.app')
+    "colorscheme solarized
+  else
+    "colorscheme desert
+  endif
+endif
+
+let mapleader = ","  " 这个leader就映射为逗号“，”
+
+" Disambiguate ,a & ,t from the Align plugin, making them fast again.
+"
+" This section is here to prevent AlignMaps from adding a bunch of mappings
+" that interfere with the very-common ,a and ,t mappings. This will get run
+" at every startup to remove the AlignMaps for the *next* vim startup.
+"
+" If you do want the AlignMaps mappings, remove this section, remove
+" ~/.vim/bundle/Align, and re-run rake in maximum-awesome.
+function! s:RemoveConflictingAlignMaps()
+  if exists("g:loaded_AlignMapsPlugin")
+    AlignMapsClean
+  endif
+endfunction
+command! -nargs=0 RemoveConflictingAlignMaps call s:RemoveConflictingAlignMaps()
+silent! autocmd VimEnter * RemoveConflictingAlignMaps
+
+set fileencodings=utf-8,gb2312,gb18030,gbk,ucs-bom,cp936,latin1
+"set termencoding=utf-8
+"set fileformats=unix
+"set encoding=prc
